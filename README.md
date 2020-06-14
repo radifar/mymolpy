@@ -13,6 +13,10 @@ This repository is currently under development. To do development installation d
 
 in the repository directory.
 
+This package requires the following:
+- Numpy
+- Matplotlib
+
 ### Copyright
 
 Copyright (c) 2020, Muhammad Radifar
