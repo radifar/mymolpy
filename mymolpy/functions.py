@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 
 from mpl_toolkits.mplot3d import Axes3D
 
+
 def canvas(with_attribution=True):
     """
     Placeholder function to show example docstring (NumPy format)
@@ -58,8 +59,9 @@ Namespaces are one honking great idea -- let's do more of those!
 
     if with_attribution:
         quote += "\n\t- Tim Peters"
-    
+
     return quote
+
 
 def calculate_distance(rA, rB):
     """Calculate the distance between two points.
@@ -82,15 +84,15 @@ def calculate_distance(rA, rB):
     0.1
     """
 
-    if isinstance(rA,np.ndarray) is False or isinstance(rB,np.ndarray) is False:
+    if isinstance(rA, np.ndarray) is False or isinstance(rB, np.ndarray) is False:
         raise TypeError("rA and rB must be numpy arrays")
 
     dist_vec = (rA - rB)
     distance = np.linalg.norm(dist_vec)
-    
+
     if distance == 0.0:
         raise Exception("Two atoms are located in the same point in space")
-        
+
     return distance
 
 def open_pdb(file_location):
@@ -112,10 +114,10 @@ def open_pdb(file_location):
         The atomic symbols of the pdb file.
 
     """
-    
+
     with open(file_location) as f:
         data = f.readlines()
-    
+
     coordinates = []
     symbols = []
     for line in data:
@@ -123,11 +125,12 @@ def open_pdb(file_location):
             symbols.append(line[76:79].strip())
             atom_coords = [float(x) for x in line[30:55].split()]
             coordinates.append(atom_coords)
-    
+
     coords = np.array(coordinates)
     symbols = np.array(symbols)
 
     return symbols, coords
+
 
 atomic_weights = {
     'H': 1.00784,
@@ -142,99 +145,109 @@ atomic_weights = {
 
 
 def open_xyz(file_location):
-    
+
     # Open an xyz file and return symbols and coordinates.
     xyz_file = np.genfromtxt(fname=file_location, skip_header=2, dtype='unicode')
-    symbols = xyz_file[:,0]
-    coords = (xyz_file[:,1:])
+    symbols = xyz_file[:, 0]
+    coords = (xyz_file[:, 1:])
     coords = coords.astype(np.float)
     return symbols, coords
 
+
 def write_xyz(file_location, symbols, coordinates):
-    
+
     # Write an xyz file given a file location, symbols, and coordinates.
     num_atoms = len(symbols)
-    
+
     with open(file_location, 'w+') as f:
         f.write('{}\n'.format(num_atoms))
         f.write('XYZ file\n')
-        
+
         for i in range(num_atoms):
-            f.write('{}\t{}\t{}\t{}\n'.format(symbols[i], 
-                                              coordinates[i,0], coordinates[i,1], coordinates[i,2]))
+            f.write('{}\t{}\t{}\t{}\n'.format(symbols[i], coordinates[i, 0], coordinates[i, 1], coordinates[i, 2]))
+
 
 def draw_molecule(coordinates, symbols, draw_bonds=None, save_location=None, dpi=300):
-    
+
     # Draw a picture of a molecule using matplotlib.
-    
+
     # Create figure
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    
+
     # Get colors - based on atom name
     colors = []
     for atom in symbols:
         colors.append(atom_colors[atom])
-    
-    size = np.array(plt.rcParams['lines.markersize'] ** 2)*200/(len(coordinates))
 
-    ax.scatter(coordinates[:,0], coordinates[:,1], coordinates[:,2], marker="o",
-               edgecolors='k', facecolors=colors, alpha=1, s=size)
-    
+    size = np.array(plt.rcParams['lines.markersize']**2) * 200 / (len(coordinates))
+
+    ax.scatter(coordinates[:, 0],
+               coordinates[:, 1],
+               coordinates[:, 2],
+               marker="o",
+               edgecolors='k',
+               facecolors=colors,
+               alpha=1,
+               s=size)
+
     # Draw bonds
     if draw_bonds:
         for atoms, bond_length in draw_bonds.items():
             atom1 = atoms[0]
             atom2 = atoms[1]
-            
-            ax.plot(coordinates[[atom1,atom2], 0], coordinates[[atom1,atom2], 1],
-                    coordinates[[atom1,atom2], 2], color='k')
-    
+
+            ax.plot(coordinates[[atom1, atom2], 0],
+                    coordinates[[atom1, atom2], 1],
+                    coordinates[[atom1, atom2], 2],
+                    color='k')
+
     # Save figure
     if save_location:
         plt.savefig(save_location, dpi=dpi, graph_min=0, graph_max=2)
-    
+
     return ax
+
 
 def calculate_angle(rA, rB, rC, degrees=False):
     # Calculate the angle between three points. Answer is given in radians by default, but can be given in degrees
     # by setting degrees=True
     AB = rB - rA
     BC = rB - rC
-    theta=np.arccos(np.dot(AB, BC)/(np.linalg.norm(AB)*np.linalg.norm(BC)))
+    theta = np.arccos(np.dot(AB, BC) / (np.linalg.norm(AB) * np.linalg.norm(BC)))
 
     if degrees:
         return np.degrees(theta)
     else:
         return theta
 
+
 def bond_histogram(bond_list, save_location=None, dpi=300, graph_min=0, graph_max=2):
     # Draw a histogram of bond lengths based on a bond_list (output from build_bond_list function)
-    
-    
+
     lengths = []
     for atoms, bond_length in bond_list.items():
         lengths.append(bond_length)
-    
+
     bins = np.linspace(graph_min, graph_max)
-    
+
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    
+
     plt.xlabel('Bond Length (angstrom)')
     plt.ylabel('Number of Bonds')
-    
-    
+
     ax.hist(lengths, bins=bins)
-    
+
     # Save figure
     if save_location:
         plt.savefig(save_location, dpi=dpi)
-    
+
     return ax
-        
+
+
 def build_bond_list(coordinates, max_bond=1.5, min_bond=0):
-    
+
     # Find the bonds in a molecule (set of coordinates) based on distance criteria.
     bonds = {}
     num_atoms = len(coordinates)
@@ -247,6 +260,7 @@ def build_bond_list(coordinates, max_bond=1.5, min_bond=0):
 
     return bonds
 
+
 atom_colors = {
     'H': 'white',
     'C': '#D3D3D3',
@@ -258,7 +272,6 @@ atom_colors = {
     'Br': '#F4A460',
     'S': 'yellow'
 }
-
 
 if __name__ == "__main__":
     # Do something if this file is invoked on its own
