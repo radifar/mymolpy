@@ -73,8 +73,10 @@ def calculate_distance(rA, rB):
 
 def open_pdb(f_loc):
     # This function reads in a pdb file and returns the atom names and coordinates.
+    
     with open(f_loc) as f:
         data = f.readlines()
+    
     coordinates = []
     symbols = []
     for line in data:
@@ -82,7 +84,10 @@ def open_pdb(f_loc):
             symbols.append(line[76:79].strip())
             atom_coords = [float(x) for x in line[30:55].split()]
             coordinates.append(atom_coords)
+    
     coords = np.array(coordinates)
+    symbols = np.array(symbols)
+    
     return symbols, coords
 
 atomic_weights = {
