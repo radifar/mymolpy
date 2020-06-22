@@ -69,7 +69,7 @@ def calculate_center_of_mass(symbols, coordinates):
     -----
     The center of mass is calculated with the formula
 
-    .. math:: \\vec(R)=\\frac{1}{M} \\sum_{i=1}^{n} m_{i}\\vec{r_{}i}
+    .. math:: \\vec{(R)}=\\frac{1}{M} \\sum_{i=1}^{n} m_{i}\\vec{r_{}i}
 
     """
 
