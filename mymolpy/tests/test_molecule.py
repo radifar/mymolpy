@@ -50,3 +50,13 @@ def test_build_bond_type_error():
 
     with pytest.raises(TypeError):
         bonds = mymolpy.build_bond_list(coordinates)
+
+
+def test_molecular_mass():
+    symbols = ['C', 'H', 'H', 'H', 'H']
+
+    calculated_mass = mymolpy.calculate_molecular_mass(symbols)
+
+    actual_mass = 16.04
+
+    assert pytest.approx(actual_mass, abs=1e-2) == calculated_mass
