@@ -5,6 +5,10 @@ A Python package for analyzing and visualizing pdb and xyz files. For MolSSI May
 
 # Add imports here
 from .functions import *
+from .measure import calculate_angle, calculate_distance
+from .molecule import build_bond_list
+from .visualize import draw_molecule, bond_histogram
+from .io import open_pdb, open_xyz, write_xyz
 
 # Handle versioneer
 from ._version import get_versions

@@ -2,6 +2,11 @@
 Functions for visualization of molecules
 """
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+from .atom_data import atom_colors
+
 def draw_molecule(coordinates, symbols, draw_bonds=None, save_location=None, dpi=300):
 
     # Draw a picture of a molecule using matplotlib.
