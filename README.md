@@ -1,7 +1,7 @@
 mymolpy
 ==============================
 [//]: # (Badges)
-[![Travis Build Status](https://travis-ci.com/REPLACE_WITH_OWNER_ACCOUNT/mymolpy.svg?branch=master)](https://travis-ci.com/REPLACE_WITH_OWNER_ACCOUNT/mymolpy)
+[![Travis Build Status](https://travis-ci.com/radifar/mymolpy.svg?branch=master)](https://travis-ci.com/radifar/mymolpy)
 [![codecov](https://codecov.io/gh/radifar/mymolpy/branch/master/graph/badge.svg)](https://codecov.io/gh/radifar/mymolpy/branch/master)
 
 
