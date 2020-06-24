@@ -23,7 +23,7 @@ setup(
     # Self-descriptive entries which should always be present
     name='mymolpy',
     author='Muhammad Radifar',
-    author_email='m.radifar05@gmail.com',
+    author_email='radifar@tutanota.com',
     description=short_description[0],
     long_description=long_description,
     long_description_content_type="text/markdown",
